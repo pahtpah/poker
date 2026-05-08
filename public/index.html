@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Planning Poker</title>
+</head>
+<body>
+  <h1>Planning Poker</h1>
+  <form id="estimateForm">
+    <input type="text" id="story" placeholder="User Story" required>
+    <input type="text" id="estimates" placeholder="Оценки через запятую" required>
+    <button type="submit">Сохранить оценку</button>
+  </form>
+  <h2>История оценок</h2>
+  <ul id="history"></ul>
+  <script>
+    async function loadHistory() {
+      const res = await fetch('https://ВАШ_СЕРВЕР/history');
+      const data = await res.json();
+      const list = document.getElementById('history');
+      list.innerHTML = '';
+      data.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.story}: [${item.estimates.join(', ')}]`;
+        list.appendChild(li);
+      });
+    }
+    document.getElementById('estimateForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const story = document.getElementById('story').value;
+      const estimates = document.getElementById('estimates').value.split(',').map(Number);
+      await fetch('https://ВАШ_СЕРВЕР/estimate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ story, estimates })
+      });
+      loadHistory();
+    };
+    loadHistory();
+  </script>
+</body>
+</html>
