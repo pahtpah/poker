@@ -15,7 +15,7 @@
   <ul id="history"></ul>
   <script>
     async function loadHistory() {
-      const res = await fetch('https://ВАШ_СЕРВЕР/history');
+      const res = await fetch('https://poker-rfs8.onrender.com/history');
       const data = await res.json();
       const list = document.getElementById('history');
       list.innerHTML = '';
@@ -29,7 +29,7 @@
       e.preventDefault();
       const story = document.getElementById('story').value;
       const estimates = document.getElementById('estimates').value.split(',').map(Number);
-      await fetch('https://ВАШ_СЕРВЕР/estimate', {
+      await fetch('https://poker-rfs8.onrender.com/estimate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ story, estimates })
