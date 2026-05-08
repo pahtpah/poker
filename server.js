@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // Подключение к MongoDB Atlas
-mongoose.connect('mongodb+srv://poker_db_user:vflhbl1998@poker.h1bpykg.mongodb.net/?appName=poker', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URI);
 
 // Схема для истории оценок
 const storySchema = new mongoose.Schema({
